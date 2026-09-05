@@ -1,0 +1,127 @@
+Menu="Utilities"
+Title="Share Name Normalizer"
+Tag="font"
+---
+<style>
+.snr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:0 0 20px}
+.snr-card{padding:16px;border:1px solid var(--gray-300,#bbb);border-radius:6px;background:var(--gray-100,rgba(127,127,127,.06))}
+.snr-number{display:block;font-size:2rem;line-height:1.1;font-weight:600}.snr-label{opacity:.75}
+.snr-warning,.snr-error,.snr-info{padding:11px 14px;margin:14px 0;border-left:4px solid}
+.snr-warning{border-color:#ff8c2f;background:rgba(255,140,47,.08)}
+.snr-error{border-color:#d14b42;background:rgba(209,75,66,.08)}
+.snr-info{border-color:#3d85c6;background:rgba(61,133,198,.08)}
+.snr-good{color:#2a9d55}.snr-bad{color:#d14b42}.snr-muted{opacity:.65}
+.snr-table{width:100%;margin-top:16px}.snr-table td,.snr-table th{text-align:left;padding:8px}.snr-table th{border-bottom:1px solid var(--gray-400,#999)}
+.snr-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:18px 0}.snr-status{white-space:pre-wrap;margin-top:12px;min-height:1.5em}
+.snr-progress{height:12px;max-width:720px;background:rgba(127,127,127,.18);border-radius:8px;overflow:hidden;margin:12px 0}.snr-progress span{display:block;height:100%;width:0;background:#2a9d55;transition:width .25s}
+</style>
+
+<div class="snr-grid">
+  <div class="snr-card"><span id="snr-total" class="snr-number">–</span><span class="snr-label">User shares</span></div>
+  <div class="snr-card"><span id="snr-change" class="snr-number">–</span><span class="snr-label">Names to change</span></div>
+  <div class="snr-card"><span id="snr-unchanged" class="snr-number">–</span><span class="snr-label">Already normalized</span></div>
+  <div class="snr-card"><span id="snr-skipped" class="snr-number">–</span><span class="snr-label">Skipped</span></div>
+</div>
+
+<div class="snr-info"><strong>Rule:</strong> capital letters become lowercase and every space becomes a hyphen. Example: <code>TV Shows</code> becomes <code>tv-shows</code>.</div>
+<div class="snr-warning"><strong>Paths are not rewritten.</strong> Docker templates, VM definitions, scripts, backup jobs, media libraries, and computers using an old share path must be updated manually after the rename.</div>
+<div id="snr-blockers" class="snr-error" style="display:none"></div>
+
+<h2>Preview</h2>
+<table class="snr-table">
+  <thead><tr><th>Current name</th><th>New name</th><th>Result</th></tr></thead>
+  <tbody id="snr-rows"><tr><td colspan="3">Loading…</td></tr></tbody>
+</table>
+
+<div class="snr-actions">
+  <label><input type="checkbox" id="snr-confirm"> I understand that saved paths using the old names may break</label>
+  <input type="button" id="snr-run" value="Rename all listed shares" disabled>
+  <input type="button" id="snr-refresh" value="Refresh preview">
+</div>
+<div class="snr-progress" style="display:none"><span id="snr-bar"></span></div>
+<div id="snr-status" class="snr-status"></div>
+
+<script>
+(function(){
+  const endpoint = '/plugins/share-name-normalizer/api.php';
+  let state = null;
+  let busy = false;
+
+  function html(value){ return $('<div>').text(value == null ? '' : value).html(); }
+  function show(message, error){ $('#snr-status').text(message || '').toggleClass('snr-bad',!!error).toggleClass('snr-good',!error && !!message); }
+  function sleep(ms){ return new Promise(function(resolve){ setTimeout(resolve,ms); }); }
+  function updateButton(){
+    const ready = state && state.plan.length && !state.errors.length && !state.blockers.length;
+    $('#snr-run').prop('disabled',busy || !ready || !$('#snr-confirm').prop('checked'));
+    $('#snr-refresh').prop('disabled',busy);
+  }
+  function render(data){
+    state=data;
+    $('#snr-total').text(data.counts.total); $('#snr-change').text(data.counts.change); $('#snr-unchanged').text(data.counts.unchanged); $('#snr-skipped').text(data.counts.skipped);
+    let messages=[];
+    data.errors.forEach(function(v){messages.push(v);}); data.blockers.forEach(function(v){messages.push(v);});
+    $('#snr-blockers').toggle(!!messages.length).html(messages.length?'<strong>Cannot rename yet:</strong><br>'+messages.map(html).join('<br>'):'');
+    let rows='';
+    data.shares.forEach(function(s){
+      const changed=s.name!==s.target;
+      const targetCell=s.skip?'<span class="snr-muted">'+html(s.name)+' (unchanged)</span>':(changed?'<strong>'+html(s.target)+'</strong>':'<span class="snr-muted">'+html(s.target)+'</span>');
+      rows+='<tr><td>'+html(s.name)+'</td><td>'+targetCell+'</td><td class="'+(s.error?'snr-bad':s.skip?'':changed?'':'snr-good')+'">'+html(s.error || s.skip || (changed?'Will rename':'No change'))+'</td></tr>';
+    });
+    $('#snr-rows').html(rows || '<tr><td colspan="3">No user shares were found.</td></tr>');
+    updateButton();
+  }
+  function refresh(keep){
+    $.getJSON(endpoint,{action:'status'}).done(function(r){ if(!r.ok){show(r.error||'Unable to build the preview.',true);return;} render(r.data); if(!keep)show(''); })
+      .fail(function(x){show((x.responseJSON&&x.responseJSON.error)||'Unable to build the preview.',true);});
+  }
+  function postApi(data){
+    return new Promise(function(resolve,reject){ $.post(endpoint,data,null,'json').done(function(r){r.ok?resolve(r):reject(new Error(r.error||'Request failed.'));}).fail(function(x){reject(new Error((x.responseJSON&&x.responseJSON.error)||'Request failed.'));}); });
+  }
+  function updateShare(item,from,to){
+    const data=$.extend({},item.settings,{shareNameOrig:from,shareName:to,cmdEditShare:'Apply'});
+    return new Promise(function(resolve,reject){ $.post('/update.htm',data).done(resolve).fail(function(){reject(new Error('Unraid rejected the rename request.'));}); });
+  }
+  async function waitFor(item,wanted,absent){
+    for(let i=0;i<16;i++){
+      await sleep(750);
+      const r=await postApi({action:'locate',names:JSON.stringify([wanted,absent])});
+      if(r.found[wanted] && !r.found[absent]) return;
+    }
+    throw new Error('Timed out waiting for Unraid to rename "'+absent+'" to "'+wanted+'".');
+  }
+  async function move(item,from,to){ await updateShare(item,from,to); await waitFor(item,to,from); }
+  function progress(done,total,label){ $('#snr-bar').css('width',(total?Math.round(done*100/total):0)+'%'); show(label,false); }
+  async function rollback(plan){
+    show('A rename failed. Attempting automatic rollback…',true);
+    for(let i=plan.length-1;i>=0;i--){
+      const item=plan[i];
+      try{
+        const r=await postApi({action:'locate',names:JSON.stringify([item.source,item.temp,item.target,item.rollback])});
+        let current=r.found[item.target]?item.target:(r.found[item.temp]?item.temp:(r.found[item.rollback]?item.rollback:null));
+        if(!current) continue;
+        if(current!==item.rollback){ await move(item,current,item.rollback); current=item.rollback; }
+        await move(item,current,item.source);
+      }catch(e){ /* Continue best-effort rollback for the remaining shares. */ }
+    }
+  }
+  async function run(){
+    if(busy||!state||!state.plan.length)return;
+    if(!confirm('Rename '+state.plan.length+' share(s) now? A configuration backup will be created first.'))return;
+    busy=true; updateButton(); $('#snr-confirm').prop('disabled',true); $('.snr-progress').show(); $('#snr-bar').css('width','0%');
+    let plan=[];
+    try{
+      const prepared=await postApi({action:'prepare'}); plan=prepared.plan;
+      const total=plan.length*2; let done=0;
+      for(const item of plan){ progress(done,total,'Stage 1 of 2: preparing '+item.source+'…'); await move(item,item.source,item.temp); progress(++done,total,'Prepared '+item.source+'.'); }
+      for(const item of plan){ progress(done,total,'Stage 2 of 2: renaming '+item.source+' to '+item.target+'…'); await move(item,item.temp,item.target); progress(++done,total,'Renamed '+item.source+' to '+item.target+'.'); }
+      $('#snr-bar').css('width','100%'); show('All '+plan.length+' share(s) were renamed successfully. Backup: '+prepared.backup,false);
+    }catch(e){
+      if(plan.length) await rollback(plan);
+      show('Rename stopped: '+e.message+' Automatic rollback was attempted; refresh the preview and verify every name.',true);
+    }finally{
+      busy=false; $('#snr-confirm').prop('checked',false).prop('disabled',false); updateButton(); refresh(true);
+    }
+  }
+  $('#snr-confirm').on('change',updateButton); $('#snr-run').on('click',run); $('#snr-refresh').on('click',function(){refresh(false);}); refresh(false);
+})();
+</script>

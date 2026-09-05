@@ -1,0 +1,11 @@
+share-name-normalizer: Share Name Normalizer for Unraid
+share-name-normalizer:
+share-name-normalizer: Preview and safely normalize all user-share names by converting
+share-name-normalizer: capital letters to lowercase and replacing spaces with hyphens.
+share-name-normalizer: Includes collision checks, service safety checks, configuration
+share-name-normalizer: backups, two-stage renaming, and best-effort rollback.
+share-name-normalizer:
+share-name-normalizer: Settings page: Settings > User Utilities > Share Name Normalizer
+share-name-normalizer:
+share-name-normalizer:
+share-name-normalizer:

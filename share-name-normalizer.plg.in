@@ -1,0 +1,83 @@
+<?xml version="1.0" standalone="yes"?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name "share-name-normalizer">
+<!ENTITY author "Ray Munro">
+<!ENTITY version "2026.09.02b">
+<!ENTITY package "&name;-&version;-noarch-1.txz">
+<!ENTITY github "RayMunro/unraid-share-name-normalizer">
+<!ENTITY pluginURL "https://raw.githubusercontent.com/&github;/main/&name;.plg">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="Settings/&name;" min="6.12.0"
+        pluginURL="&pluginURL;"
+        support="https://github.com/&github;/issues"
+        project="https://github.com/&github;"
+        readme="https://github.com/&github;#readme">
+
+<CHANGES>
+<![CDATA[
+### 2026.09.02b
+- Skip shares whose normalized name would begin with a digit or symbol.
+- Allow all other eligible shares to be renamed in the same batch.
+
+### 2026.09.02a
+- Read the authoritative `name` field used by indexed shares.ini records.
+- Retain compatibility with releases that use share names as section keys.
+
+### 2026.09.02
+- Initial release.
+- Convert capital letters in user-share names to lowercase.
+- Replace every space in a share name with a hyphen.
+- Preview, collision validation, service checks, and flash-drive backup.
+- Two-stage case-safe renaming with best-effort automatic rollback.
+]]>
+</CHANGES>
+
+<FILE Name="/boot/config/plugins/&name;/&package;" Type="base64" Run="upgradepkg --install-new">
+<INLINE>
+@PAYLOAD@
+</INLINE>
+</FILE>
+
+<FILE Run="/bin/bash">
+<INLINE>
+<![CDATA[
+PLUGIN_BOOT="/boot/config/plugins/share-name-normalizer"
+PLUGIN_WEB="/usr/local/emhttp/plugins/share-name-normalizer"
+
+mkdir -p "$PLUGIN_BOOT/backups"
+chmod 0700 "$PLUGIN_BOOT/backups"
+chmod 0644 "$PLUGIN_WEB/share-name-normalizer.page" "$PLUGIN_WEB/api.php"
+chmod 0644 "$PLUGIN_WEB/scripts/share-name-normalizer.php"
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " Share Name Normalizer has been installed."
+echo " Open Settings -> User Utilities -> Share Name Normalizer."
+echo " Version: 2026.09.02b"
+echo "-----------------------------------------------------------"
+echo ""
+]]>
+</INLINE>
+</FILE>
+
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+<![CDATA[
+PLUGIN_BOOT="/boot/config/plugins/share-name-normalizer"
+
+removepkg share-name-normalizer 2>/dev/null || true
+find "$PLUGIN_BOOT" -maxdepth 1 -type f -name 'share-name-normalizer-*.txz' -delete
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " Share Name Normalizer has been removed."
+echo " Backups remain in $PLUGIN_BOOT/backups."
+echo "-----------------------------------------------------------"
+echo ""
+]]>
+</INLINE>
+</FILE>
+
+</PLUGIN>

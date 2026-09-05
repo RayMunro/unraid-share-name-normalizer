@@ -1,0 +1,212 @@
+<?xml version="1.0" standalone="yes"?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name "share-name-normalizer">
+<!ENTITY author "Ray Munro">
+<!ENTITY version "2026.09.02b">
+<!ENTITY package "&name;-&version;-noarch-1.txz">
+<!ENTITY github "RayMunro/unraid-share-name-normalizer">
+<!ENTITY pluginURL "https://raw.githubusercontent.com/&github;/main/&name;.plg">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="Settings/&name;" min="6.12.0"
+        pluginURL="&pluginURL;"
+        support="https://github.com/&github;/issues"
+        project="https://github.com/&github;"
+        readme="https://github.com/&github;#readme">
+
+<CHANGES>
+<![CDATA[
+### 2026.09.02b
+- Skip shares whose normalized name would begin with a digit or symbol.
+- Allow all other eligible shares to be renamed in the same batch.
+
+### 2026.09.02a
+- Read the authoritative `name` field used by indexed shares.ini records.
+- Retain compatibility with releases that use share names as section keys.
+
+### 2026.09.02
+- Initial release.
+- Convert capital letters in user-share names to lowercase.
+- Replace every space in a share name with a hyphen.
+- Preview, collision validation, service checks, and flash-drive backup.
+- Two-stage case-safe renaming with best-effort automatic rollback.
+]]>
+</CHANGES>
+
+<FILE Name="/boot/config/plugins/&name;/&package;" Type="base64" Run="upgradepkg --install-new">
+<INLINE>
+/Td6WFoAAATm1rRGAgAhARYAAAB0L+Wj4NP/HIZdABcXwcAN4XBkd86HsTqBaWFfvnO2W0uGwPNY
+Fwg2DihKQfr1FR12yE+7w/fEiFnoSvMT1Uf13QJ3ocfx/qI7zWh/ww4ilQ2z3zXWhLLH6YlFkTkB
+bToAm6SCICmYAlN8ek41Bo+aZzyOT8kxuIk+61K6FyIYwdOgsrYojl1+1DhWjygpZ9MVGq3b6g1k
+L18s4bkVAd4VTdtgHVIsusU2QkGQXoZmXnFHSGrtYeCe17Z1/InHEkyRqnD7CVx5PfaOaFJMhmVw
+w7UjZeAgRQO1igbXAi7IpPNb+W0P/csfQ6NczJjMfTn3X703KJqO1zHqSq6qhIIZcM2zYNyWpCt+
+83fN7+DvRM/FByzry6GMzNh0gs7Chv2Qt36zkZ8My2RdDTEQpNFGJ8lDeqieZZ1j/u/JmWnPjQJF
+H8ufHZpQUoL8RJb4PYh6gT1bQEVVB91ekXipUSLk2YxRNCCT9wlj4XkSZ+HtXuiQGPAJms9qWYQu
+UlQKNutxG/XeLvru8BckSsEU/2LzQ/20ZqM5TcYPJxWnuXHphM7Zt1C1IaFbMHiuCbNtQ5xpnfZ8
+7tYiHONTg8tGtZheHIlMKS3R6fB+Jgq+cbivXX2ctCcz5N5mjR9rZELILGR/HNT0GihzOhyOU5Wr
+CrWXQj8R89YhFbytZmxuvWDTm5tPRKddHrc5s56TU4zThffg4LTvGSI5IepkD5cVKBLVmJ1KK8Yk
+qhg6OPoTHiarjCJtmb2CWE3pyBQzt0TPBbZL62z3gJM6gkJM0YKO6qlfvb37M1Dj4CQCuC8npUE6
+UnoarFckDiAK1t+PGB43+kfvGktPERJDCen3tTVkI3dAgtLxpH+94G6HxpmdcW3Ph5zCbM8wpHWX
+lKODVUqWOkjp9BCZ5ihky8KO3aMQsKudxgngAbGe405Nh/gjis2mmwJV4WAH9OUpvdvjfkeNUA0P
+KANLO6B8LoP35rfMcipbqjMaNdNx2F/RwJmbqmrSOuD5LziMqQM3tVKsJHCPPSkvoDl8OYg+CtEY
+4dEeJJVbD59igIuf0dHJTw3j7uwZOnAnyeLUV+nDgQEJ0Gp8P+rOiLlRKedJJrZhE+HBjtX3Z6nV
+SxFEsyyxBrGIfQo0ant+fdpUlu29APYFAKab31HpG+nm/7p0d0syG65q9aLt8fWOLVSb5ft3CC8I
++rRqKC1tcAZS2kJeAWC0YAaHudvK4440j0Fg67TdS1SiiwWKDGuDFcUaVWpf/Il0vyAiLZEDNGV5
+mO6jO9paN81cI3zVG7l1rlApDFmUdneUtkDZQKg0VwYHJw03t1tmoFYNqUIuYQG6G3Qi3nWXyyRy
+YO5ucP00gpnfZ9Bo4lZPC+F02fCipw2a6UX2uKC2gOE3xvaKji27exM8bZvMGu7LfeYlZJfQtziN
+F9LIILLCqtgRfIA8vPCGPNHBpyvX84eOAdDJ6VbVfRDDt2Z62PfewCNKROdnogS5f4vVoAFnp9mG
+xquLNHjojy7QDqnrdrSRLbSSBc4KcSpdDeqCGJoFaNxErS26jVxJGDLdpai8NYkWDi825h8DIxS2
+ZRb/0O50pyX839YXmttBjDycRSwm8sFTgBPKQhP17xcVnmljWQTFjcRD5Q9vA6NUOXGl5Ua0sFOq
+zejRh0OVanzKGx+NmEmUFAJPmh2AyUgebY99rPZBCGRJzJ3Gqg5g9K3rMNRaGw19gAta1T4dGQJC
+p0lnm9KxJvBwCtOmh14oz1YtfY0HCig0SWbErDxXjLrHeuq2zTHoJgKAbW2B2BFYFjX5bAG9nVRf
+jsFkjny3ll0oOnb+NC3q2YtHianL3hKU0Z8O77nuVQ0pOhim75yM2TEAxiDL9Ww8L56X/vDdGgdc
+1Fdnjh2pLv6SJ+r3RMjlz7P823Cy2tqsHzd3uhYrrnVVXVXB1ObZ/+UClSj65PZzXhZUuIx76d+O
+g5ZUj6IUV4sJSJ2eYU13tdPCLiTj9l7/w0fN6sxF/ioJpl9NZaNWm9H4BgHxaKrWkAzSsCE9ric3
+coVotMT/eO3nsfzRcRDnwVKohHyL9sblANyGznYQJwGEoIp1ILNVBHwcY/jIKXPne3kppaNBoAjr
+XovET2qZ9YJ8oLpE6QH1kmnk0dQ/9tvPyZWCJv/5n+y345bNBhGkXZ33gFgg31hgrN7dhwBoozCc
+sd9lx0gJg2jNvJjaJfRhksc5i23PEdVY7uIRoywiRjmb0TVgYvDBZ3Ie7TrqR1GKbMa1zMqI6WgC
+lv6NEGopjqW/fkw7FnxNsY1DPMeFNmAw3H793B1IXp1orKiitatkoc+9att8c5EkeMUwD5scMQ1I
+HYYYGXoTNzHgv7CdwBbAoxqrUMpTSsT3kTg4Ti/fIzuUWyYLax26SLT1scTDUU6x7zmrtV9/qL19
+2PY3//OThlsZDTaHg9PuBIyfcfcsjmMTDs22TA3xOt13/0n4yuz63dDrEhSpTN/oU16wwgVmESTw
+HR2wdL/nf/8qALvKAw5UbCXE7lX8KYOmPq7L9gcSPvRYHABbpZg+AKMXsfm382zjmoiTd3E3uxZR
+wsohFirPpVbCNQajS4+DvgjZj3PYDB1LEOBiK4qqNee8Yx8Q+UOMY9vxnnT2fXMq9rajDj+K51Qg
+idz0+JS+2e10cekAgIVumazJkKp9f4af0my3PNRYViKqYQ17p60Hr8GdnnIxaUfVReoIw+tQcsd4
+rYrDP3DoMsCxrtvwVVoMwNrmIn9CUKlQ0QawuIQsUYAah8uzDkvQinJFc7JgzR8uA8Ox+sNp7OmA
+hciFs0tfkqy/WNbQinHKd7v4cz9PqnH3qNc7KSq3CHbl8/crczLHcKi2SmgCYFiE0AlGqoO8qhx1
+g1HHNUwGrUy41SF3U1GHPqCqWWhN+vOcDzD7YI4p2m712hNQdDc+n3622efOrI7vUCed8MRjQYxb
+JKSvzukgbewG4y5YdLxvh8BGpjgS9ERKRqHxoxb7QHiisQaM/9ypryPStXHhQdj+wE01BXO6n1Q4
+wqprp06GBJUf2l4HyEVUPHwSEBboz0jYqFTILOUuapQNj1wvvvF3hHa0eQ1KOEwvlRV4hVl0iWBx
+6X+AdS0v4VaCY1sTZ8o3IKiSXH6ij3Sj0PzaKIFxYIt1xHUpakHdTvP2009sBB23MSY4T+uk1U53
+h6AeIpJUSR6CRABpGZsQOv4SL1V4cTzLYSWQ2BLe3oYJEtPJB0TV/YYO0YNqX+IqZ7ioo1coj2/q
+3pWiHUzGa7DljiRhRyj57cXgRtTkX+K+VbFfPMvsR304SmT7nTyjjUjSZ1CWNzdRiCQLXxUfu3Wb
+MpUSXshYdO+HvfXFjh0kg8n4bykOXErKVcPallwERNzsFaVevy+17zJWQhyxePHe2cceCCAOYFnq
+VehsUkVadsP2IE4vra1uaMXZsKj++ukQrOjld3eNaPFPCFB3rUWa9aBgxubb+Fe72tQNF/wpKAmW
+j1E2YyPLkLXYX/yrV1LV7uCtzb0UQg5SWAeigrkSyO7rOK2PI5RY0wyYXP/vwyXCm5t5bkJX12cJ
+qj5gK679vl1zl9L1GjD8skT8RN1BBanv8MxiDZAbVU6Jxuu8ArX0r0Xx7lHUiq01fYjB9ADVaO/6
+8S2MnNTVGCTFIaO4ovzKVbiPpeA/gC+F40zbLdeG1NAsLlOEw+EXv+jdg4mywfvXTAbq3UsRLgzD
+4NHLFjtNSFnalbca9jlEmhttSkVDYE9FMm+UjObtEJ7U97OGy8WDW3xc5aONonKG63tYl44eXXt7
+r8UHVfMe2gszyWVDp8Z/CEaaTykFN0Up7tqtpOJcE8qevmvsnDJxvsS8jPZ0atOJmO6ghArbbqws
+caKd0WD5BbvgnH24q3KIogrr6ySkJbYiPBSfCuw6mhD1GeWA4dFZY/V4Sk0WsNjLEaLOi/b5NXji
+AFct7VJyWdjo7vp84ZUmPinhnpX6bE3y2+B2zPTim1rgQVka9sw8p1jyWNwXbmNTjKS7HEU7jcww
+j4Nhu14Dx+XlS/fIYkza07pdAc6B+swDGjDFkT1d9Me4NZaQKKNzbEk9uMqFlHmw/NGHMAMJkXgi
+01sdo+GB48IWeijMzpOwv3wLxkkC1im9A+3GQJ629U3EHXDkGhg2zd1V4h4NYuA50GpmkkEivwDC
+dMBcdaO6HmyWA8VsEHmGTuL7Vg0zxL9VzA3octOWO0aKmP1AAxEd9WmLzbbVOopkaPW1cPQrEa0w
+gKSr3ayPpC2U2TaJ98/q5M8vU2I+9xSo/lceXxbrEi11G3TN2Qu3MdCPb3NizCid8g4g3T6AdXTQ
+uOpWs5EBM9Sm7nKQKgn9adqhDEhqcjH1Q2ZU/BMx+21S8ZJLtj38RKlEzSaqoo/aeTMF7MRaejEN
+Qcy0IkPCA7LFL+tg0Vs5dhIXwryoSdHYxbmvdbUh1u0WVelBE9KdLwMTbA+ELrLCJSDf47J5B9dB
+ak1QyswG2D9WtWhPOuyFfHHCCy5EbzNcAHlnK2KRw79DZf8j29eYqVs7RjWejCfx2fd7RTxMHMVc
+C4niajyeMUACNrRxr9UreO1yhk6lrqZwu8K4qu7R03ynKvd6J5X8e38ao3/ECo1ocf8XFQLIk5Sp
+nokSck4g4AhCcv1362bifXwMmlct7NGno/ClIPB2td7ubw1h9O+T78dlg/iMt0cFmUbEmzJE1b/e
+zBmHZoRNpK9EEiSMt5xBqHT4AWgkNDiAc3KZkBEM+ZjFFenTJg3VdODAIDoRguFJoZtAuNcmF6I/
+lNvOOHMvyV5ThwMpE0TdXV8A+vmRTZcTOvzhGoGX6kNvoUg2NlmV7q4Vq/vbPl++mXfQXusi0IAe
+3Sfcvt1zqkBn5mNTYI9ssmLCyVtDkicCgJqsFHytnj3qul1ASoV/ZDM7diXUIr2zAHT37Lj3RhYm
+Qqafyr85DB7t1POvNn3xx+zTo8LIFSwNnhvXvJ5/YCwVdPCo3v3n5L21Eu68vgQXwKltM/fPcMhb
+5B52Vgq5zeXFCcmsTevKabzqwBIhPH26XCNX6dUvk5qX/YnnIVa6CdDpd6smJBgsWn+b2bDNanlq
+38DNZJXNwT8ELrg5z7kgA6a+i9d3Tmi41QkjM6J/VSFSviCSfLmV81rLOYQ0+UBNT1Dg/ctb+dLt
+/LpItQJhBGVIsdRTX0X3lo2dMZpjeCMXH/dCOT7m7hwu1HD5i8rv5g6ex0+Iso+zGgZOiNMbdl7R
+0BOGivLGieRUK9ShrbTDktB7XotQ3XcMzEpUwTtP+wgA/pbkx3rZCp/NBsBI05VBcP/cYQn15Hcs
+Z6OSISopSbp+JC7vmmJkBc1i9DsR0RB3YlAMjObDtrTPkb5Q5Ddl0Z7YCFlop4TahY3KZSCXbjdm
+bWh7y2TOtfD438/eyDk7vPpmsUPnm01Y7uUerLxtpLC2iRYFWueCHYWkBygAv1UvQX1ucJMdiRGP
+Lmip7HACLIa/8OmQGh63pns315u8guGBkG1STleDNjTtXEMKPbQmhfIthW7iiLN68FCZfuQJT1kr
+q6LSd2UOrC5SXmN5wEZzOz7rDMd9n3QWIuWhwk+B00SvIMP/EzarzpAwBdiRv80dk4Ai9p3uw82+
+tsUcIC7prZHpv6MKCjNd4894pgVH2NoJmXh1ZQOapRb7nJtXEan+lC5jHrRIEbOyqesda5oPP8oR
+dj//Wci3S6i3BPWffYphbbKjzGrTD/4jNBVwLteSxaYzzYmM+Ag1E1eDVL0GEMhVX5TyI9ZRiDXC
+V812JYXIME/LPzgMaSaXy+Jbtg8xea6SQqK2Wa4ta2lVONACaNNdMQ3o9XHF/xKgpsN2lYNZRayk
+67BXRePSUtOnkGLiFRGKhu6tXxUx6lyKPnMyvCjFIL50gNPzssCzGZhWJe8n/85qdUsXAmRZpVSa
+re89dhugrDOxWw+WISRiiUV2IMz/rF6qjyfcrPQfvc+s8ncHVzEcqf2R4H/W3zvGSKMn/sd34VaM
+oihrsPFLugpn1NyhNnsptOoF8Ki3JoFZtAuktJCKILbGzL4bC3mSPxeSwkv1R1CQR8L59TX/Vmd3
+ZRZNg92LKVx6x1XijuB+V9e7XK1O7FBYjwPdwz7uY+B7CwzyxvnOlButR8asTOSWO42iqClcp21h
+GK4IbQWjlXXB414fAZs1B4FLF2cufH/+1lTOKC+fsjYn1qfyC8rJB3RNFI9MoS1e4XSR3EzlveHm
+LLpnZzxbazhQe4tN4Ysl1oWOZBqTNBzuBLmkT/47ObS9n4CE6nzR0C3c5qT33LH3R6dGV8v6HQy0
+6/q+EnR1QqwTQUxb4w26/2YqE2pPjHxv9Xw28UsL+npLpcqay5JxzwXHRJhIYLN85o4T3lf/LFSn
+6Ruu90BgXPu/ttmCnue6nBOwz8GbmuoxVvql9ByL2Ed+rEm4pMVIiX16vo9/L/oav+gP7Xnns4tH
+bZiGHbpdYdadkkpKvnhoDBdIlm3VBmF91yQbiCsa+zXLg6kaYE5tthXrNOuA+N7wM1zxQCeOl2Fs
+c9HHvkAvD3wN6Cokqycsh/MMUjBwXVjNktZDKxEQmbT/e+dJYFJGTiVSgX+A+fR9RteMEvCEhCc8
+VIf6nzVKruTdu3+2i/4NpDwTs3dVyZpDpZuc3O6EKbKLNApg3WK6TQPPKMOQLlt+UkJTaGiWDumh
+UxT2HC6Op+LzEHXENpn0nPiZDkg+ZaroFFzkFSJbt20KQ0TU+gg45UvyPkcUzWFbajQ1yU2CdO54
+sf26pgO9cKPxysXv76+qaQw9FW9WF4dwzIaWxfy40J5a/y/h2tjxxgMnfkS5lhRjIzzvMR/A+3VO
+yy2ecbgpnEYoYVJrqVtduYFskzzw32uTvQMuYdUOTEzu36RU6fWtzf0WAZf6SV3KogqPi0ca7eZk
+f6ZrzGOj5HKrBbV65s1qbY86EUqfwM6NOq9goW4bIdHC2JrDDQyx64a1ieqjdfEA/xRiv7+giXQ/
+s11nsYZWoCGF9LeuRFZbqhijUmWFiARWth9S15qDz7idK/0EMsxFutioAR8Bmd+DfNB5F6tOh0yL
+D6md9EfcSAo+C/lMi55fTCFwlBuK0azK5GUOniEk9LHac2GKEXKmXbhwMZ2zh4EAAsxjCMz/Qnjp
+i1WLOHSAXIGHYTMTxoygYrRYsKwyNjQ6Y4gjktWdEe7Q1dVcXsPnbahT3GSEi5LpaM9c70t7binG
+V/Ufs9uSGiTXAWrwYrHukobzEFk4z+lbE12PR8cr3wvK3ZzShJy+VFG6xLBXc69na0qSELLrfmxr
+KqiARIRRf6+4E0wNMOJ4qgYaRLU0iyXaX0ZGOpJ4RuYBOVuXRP4COykV6vIIsxVrsaNgroZxcVQH
+WIS8D3Oc5UYZE7XjF8b6W1bS0g5QkL6bizmz6lt/N/PRctPMD3I+gS9+HasIsbIKWMTnfPxYA255
+1fOn1INKaOEm8s382ws8xXnYkWZyuUx7AowHQA1IYPgonQBHkBI9fhBDe+Cb3TUmKNf9qmTfZxOc
+g4dY4VUcy6jKkQOjApNDACntOVCFO3wI8KtiMRNmpusYp1v8ZLdQic1wdl/dvNsjx3LYwrHfBEHm
+KErfp4mrtKvOc07RDXiygxbGjr963uTGykKF9DteqtPDlpiD2tFDJHgtwJDIaEzQoRB38+yhfPEC
+WMWuyJK4Sns1zVPCX7GAyf/LjC9gCCS/UpRUvcG4XVjX1wnlg03yGNICS8m5fo7eKbpkKh5oVjmd
+NQAGIZayl1ydDlvhnaumdHrPAal0+JH7lmY1E9sSIDcwa48ItIxS4DI2zpUJUCHXqCI689/6lr65
+zBqchvlhda0e9ndyIDCuokLOBjobJEE0jzOrDlyeUlcSPjJ+7TvSCnaLZgpuuyj3DXuOeBdG7Xjv
+TTkMbdvJ89XHj9Zibilvwfd8rVN0V+6v1Ua1+EScV91tZZ/tonWKD/Qy0V/O69kuuGUIiA0UDQ9b
+AbSLHfL15U0ZMyZuFBvICIviu0LLA5M9Rrpv+fuygbn24QodF4ffX2PLWcy9ikqgYNhrph7jMAHr
+H6nTxse2ycPSBlVQSbwCT7EuL5x7dlqJc73bd8QGpuvqKN6NSo4SMInuA+j3/SHuW+z+cNQQNkdo
+oT0JuX9mAjXTLBBq1VNgaqpnTvmeWNaMwxvbxXrbKA3CxQns2vQEYJTPbFCrTpVpK24Oop8bR6Fu
+aJ2JqpxjlGBoGOqmte6f76KNn02hqAWyjZdtxAJb76DdXMImcfAnB5pahpdnXLL1HtqvG66edNc1
+6nCGLipPo1OolhsQaoJiHnC3kaFmRB0qcx6wjLBJZjl7QV2cEm2Ey5GFlRuCG2jsbiAvhvCge5Vv
+rsiKBne80MlngDwpeHAFLloEpFLeSPe0xUCvXWANfR2iWbGT5+zeW6MU3XmfPp8iNiguEf+Q+f+V
+88Q1s8DqouQcBQaWhGsKdJVGVw3Wj2ZG8lKgjSXg6Bobtwb2Ksvr3rzhT5SLEGbc0YxrnzLeV50u
+cgjj2TmwTw2WKDBPZv07+YOj3jHjzidCDQQqt9fTMnc8f27rfJPw0ff0uoXK7/7GWBK6/jzpgBw1
+h4NX1Po76ozKjrnBivzr6/LeXLOohGy2zLqwSUqcZEbRlZtw3iBA0Tx/bV8ziHfNWlD2rukEktRn
+8gi+Aybn1ynmmJi4tRur2bjr4PAFXjTFaPlwBahgLUaVstQemLYU+sqxU8K++5XIimpfSwrAd/iC
+qamvTdH8I0aBijx+g5YxXPOAx0/BtUvg4wMAbdbkcwa8yzdgWF649ifscNgrR4mxxZrC2M+XWMKe
+uy/mv/ERrghh7CPOtuKmkyX9FIpde6On1vHdxsBNpuMWxgBzzliEqRkWZyxjnx7ljXTxwWcZFscX
+Qj2ZhTr6f4A+BhqAlclS4+nyHewwxBklaY1bxVjnLXbdaUMantTuyvPPZnD5HLA+sC0cDxoFX6O6
+QesTqG/w3YPfBU12uSRY4dmveMRhzGVSMrm+Di80nP7pI7eF5JiB1J82glxPeuKn6BAC9+F9wQGs
+ax9rzy0J+dXRjhwBiak+gemybKeS+YGw8bAsV9mMG6IdiEse9xcHX3hX0NcXLidZDe27xRnNJHJV
+E4qFCGkaaTB/ItyaHcnRBBx9Q6qFVR7nblGsV/dIxmLx97ENMyOOQYG+siijKq3n5voeiol3QDau
+KDlnBVe1sSFHo1A9E2ne2RjyG2B/khYVhV6dOXqT1+6bKaOBWYd1GbLfHNIlI8aMZ86eAXEd3kHd
+vn1oMHwrWK778tfB8IUPOvNiGRwzvkn5cTWTa70DpaKwLjj+7tHVQT/mggJzQzonYOUJU0HO9GMI
+3biXPx4TV6HLMUsxgzs72XuVaKzch3ZWahyrwgu65wKolCC5rew7AKCeAUyxhQT4KL+YpCKHImut
+R4V9DPAfyZ0qNKPz2bekCEOJGDd/W/wPxj908ggbZi0AxXPa537tqPcVG2AZVdaeEcg8qAaB5N50
+Cc5td7aCTZ3NfgiTpkrnRaZjH2Sv6WQLVFHfGkt0OxkkDTYBABkgt+4U03CshF7PfSI8TrKI0ol8
+IWg8CXHjq37+tKiSseCq886aHCqznplVgxSR0wubrfmSLJFvfV9km3W9PKNqbEbS9CQ+VuqwXz9e
+vYEa+z4hfrTGafFWtAKnAfdI3kqDAWMwahye8G2rdYA3bP4vi2WsCP0PKz+MB7rYxzQWtERD+1DQ
+VjM0r7LAebE8WUL+6rvi1EWMFDui2CRqwn3iaHGlk62RC6tgAAAAAD1J9YH+1SwEAAGiOYCoAwDv
+V68qscRn+wIAAAAABFla
+</INLINE>
+</FILE>
+
+<FILE Run="/bin/bash">
+<INLINE>
+<![CDATA[
+PLUGIN_BOOT="/boot/config/plugins/share-name-normalizer"
+PLUGIN_WEB="/usr/local/emhttp/plugins/share-name-normalizer"
+
+mkdir -p "$PLUGIN_BOOT/backups"
+chmod 0700 "$PLUGIN_BOOT/backups"
+chmod 0644 "$PLUGIN_WEB/share-name-normalizer.page" "$PLUGIN_WEB/api.php"
+chmod 0644 "$PLUGIN_WEB/scripts/share-name-normalizer.php"
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " Share Name Normalizer has been installed."
+echo " Open Settings -> User Utilities -> Share Name Normalizer."
+echo " Version: 2026.09.02b"
+echo "-----------------------------------------------------------"
+echo ""
+]]>
+</INLINE>
+</FILE>
+
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+<![CDATA[
+PLUGIN_BOOT="/boot/config/plugins/share-name-normalizer"
+
+removepkg share-name-normalizer 2>/dev/null || true
+find "$PLUGIN_BOOT" -maxdepth 1 -type f -name 'share-name-normalizer-*.txz' -delete
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " Share Name Normalizer has been removed."
+echo " Backups remain in $PLUGIN_BOOT/backups."
+echo "-----------------------------------------------------------"
+echo ""
+]]>
+</INLINE>
+</FILE>
+
+</PLUGIN>
