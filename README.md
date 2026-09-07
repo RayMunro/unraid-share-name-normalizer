@@ -23,7 +23,7 @@ The plugin does not modify Docker templates, VM XML, scripts, backup jobs, media
 
 Current release: **2026.09.02b**.
 
-Copyright © 2026 Ray Munro. Licensed under the [MIT License](LICENSE).
+Copyright © 2026 Ray Munro. Licensed under the [GNU GPLv3](LICENSE).
 
 ## Installation
 
