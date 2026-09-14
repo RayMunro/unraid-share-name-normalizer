@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name "share-name-normalizer">
 <!ENTITY author "Ray Munro">
-<!ENTITY version "2026.09.14d">
+<!ENTITY version "2026.09.14e">
 <!ENTITY package "&name;-&version;-noarch-1.txz">
 <!ENTITY github "RayMunro/unraid-share-name-normalizer">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&github;/main/&name;.plg">
@@ -17,6 +17,9 @@
 
 <CHANGES>
 <![CDATA[
+### 2026.09.14e
+- Fix the install-success message printing a hardcoded old version number instead of the version actually installed (the message lived inside a CDATA install script, so the &version; entity was never expanded there - now substituted at build time instead).
+
 ### 2026.09.14d
 - Add a copyright notice to the Settings page, matching the other HackerHog plugins.
 
@@ -67,7 +70,7 @@ echo ""
 echo "-----------------------------------------------------------"
 echo " Share Name Normalizer has been installed."
 echo " Open Settings -> User Utilities -> Share Name Normalizer."
-echo " Version: 2026.09.14d"
+echo " Version: @VERSION@"
 echo "-----------------------------------------------------------"
 echo ""
 ]]>
