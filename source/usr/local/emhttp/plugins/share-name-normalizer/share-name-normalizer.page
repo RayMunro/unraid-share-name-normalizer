@@ -19,6 +19,7 @@ Type="xmenu"
 .snr-header{display:flex;align-items:center;gap:14px;margin:0 0 18px}
 .snr-header img{width:52px;height:52px;flex:none}
 .snr-header p{margin:0;opacity:.75}
+.snr-copyright{max-width:720px;margin:28px 0 10px;padding:14px 18px;border:2px solid #d65a00;border-radius:8px;text-align:center;font-size:18px;font-weight:700;letter-spacing:.2px}
 </style>
 
 <div class="snr-header">
@@ -50,6 +51,8 @@ Type="xmenu"
 </div>
 <div class="snr-progress" style="display:none"><span id="snr-bar"></span></div>
 <div id="snr-status" class="snr-status"></div>
+
+<div class="snr-copyright">Copyright &copy; Ray Munro 2026. All rights reserved.</div>
 
 <script>
 (function(){
