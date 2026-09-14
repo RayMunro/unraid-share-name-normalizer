@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Share Name Normalizer</title>
+  <desc id="desc">A folder icon with a share name being converted from mixed case to lowercase hyphenated form.</desc>
+  <defs>
+    <linearGradient id="folderGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3aa0e0"/>
+      <stop offset="1" stop-color="#1f6fb0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- folder body -->
+  <path d="M64 152c0-13.3 10.7-24 24-24h108l32 40h196c13.3 0 24 10.7 24 24v192c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V152z"
+        fill="url(#folderGrad)"/>
+  <path d="M64 152c0-13.3 10.7-24 24-24h108l32 40H88c-13.3 0-24 10.7-24 24v-40z" fill="#175a92"/>
+
+  <!-- conversion arrow -->
+  <path d="M232 268c28-26 68-26 96 0" stroke="#ffffff" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <path d="M316 258l16 12-18 8" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- before label: mixed case -->
+  <text x="180" y="240" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="700" fill="#eaf6ff" text-anchor="middle">Aa</text>
+
+  <!-- after tag: lowercase hyphenated -->
+  <rect x="150" y="316" width="212" height="86" rx="20" fill="#0b2a44"/>
+  <text x="256" y="374" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="1">aa-bb</text>
+
+  <!-- normalize badge -->
+  <circle cx="384" cy="176" r="40" fill="#f1892c"/>
+  <path d="M368 176a16 16 0 1 1 6 12.6" stroke="#ffffff" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <path d="M368 164v14h14" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

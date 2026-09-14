@@ -14,7 +14,15 @@ Tag="font"
 .snr-table{width:100%;margin-top:16px}.snr-table td,.snr-table th{text-align:left;padding:8px}.snr-table th{border-bottom:1px solid var(--gray-400,#999)}
 .snr-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:18px 0}.snr-status{white-space:pre-wrap;margin-top:12px;min-height:1.5em}
 .snr-progress{height:12px;max-width:720px;background:rgba(127,127,127,.18);border-radius:8px;overflow:hidden;margin:12px 0}.snr-progress span{display:block;height:100%;width:0;background:#2a9d55;transition:width .25s}
+.snr-header{display:flex;align-items:center;gap:14px;margin:0 0 18px}
+.snr-header img{width:52px;height:52px;flex:none}
+.snr-header p{margin:0;opacity:.75}
 </style>
+
+<div class="snr-header">
+  <img src="/plugins/share-name-normalizer/icon.svg" alt="">
+  <p>Preview and bulk-rename Unraid user shares to a consistent lowercase, hyphenated form.</p>
+</div>
 
 <div class="snr-grid">
   <div class="snr-card"><span id="snr-total" class="snr-number">–</span><span class="snr-label">User shares</span></div>
