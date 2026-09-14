@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="icon.svg" width="160" alt="Share Name Normalizer icon" />
+</p>
+
 # Share Name Normalizer for Unraid
 
 An Unraid plugin that previews and bulk-renames user shares using this exact rule:
