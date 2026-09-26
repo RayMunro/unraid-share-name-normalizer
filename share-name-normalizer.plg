@@ -15,40 +15,6 @@
         project="https://github.com/&github;"
         readme="https://github.com/&github;#readme">
 
-<CHANGES>
-<![CDATA[
-### 2026.09.14e
-- Fix the install-success message printing a hardcoded old version number instead of the version actually installed (the message lived inside a CDATA install script, so the &version; entity was never expanded there - now substituted at build time instead).
-
-### 2026.09.14d
-- Add a copyright notice to the Settings page, matching the other HackerHog plugins.
-
-### 2026.09.14c
-- Add Icon/Type=xmenu to the page header so Settings -> User Utilities shows a real icon tile instead of the generic page icon.
-
-### 2026.09.14b
-- Register the plugin icon as a native PNG (Unraid's Plugin Manager icon only supports raster images, not the SVG added in 2026.09.14).
-
-### 2026.09.14
-- Add a plugin icon, shown on the Settings page and in Community Applications.
-
-### 2026.09.02b
-- Skip shares whose normalized name would begin with a digit or symbol.
-- Allow all other eligible shares to be renamed in the same batch.
-
-### 2026.09.02a
-- Read the authoritative `name` field used by indexed shares.ini records.
-- Retain compatibility with releases that use share names as section keys.
-
-### 2026.09.02
-- Initial release.
-- Convert capital letters in user-share names to lowercase.
-- Replace every space in a share name with a hyphen.
-- Preview, collision validation, service checks, and flash-drive backup.
-- Two-stage case-safe renaming with best-effort automatic rollback.
-]]>
-</CHANGES>
-
 <FILE Name="/boot/config/plugins/&name;/&package;" Type="base64" Run="upgradepkg --install-new">
 <INLINE>
 /Td6WFoAAATm1rRGAgAhARYAAAB0L+Wj4Xv/metdABcXwcAN4XBkd86HsTqBaWFfvnO2W0uGwPNY
